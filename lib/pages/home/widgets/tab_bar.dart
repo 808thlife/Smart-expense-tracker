@@ -10,7 +10,7 @@ class TabBarWidget extends StatefulWidget {
 class _TabBarWidgetState extends State<TabBarWidget> {
   @override
   Widget build(BuildContext context) {
-    return TabBar(
+    return const TabBar(
       tabs: [
         Tab(
           icon: Icon(Icons.attach_money),
