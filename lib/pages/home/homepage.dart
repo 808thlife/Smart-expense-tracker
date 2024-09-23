@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_expenses/pages/home/widgets/forms/add_data.dart';
 import 'package:smart_expenses/pages/home/widgets/tab_bar.dart';
 
 class Homepage extends StatelessWidget {
@@ -44,7 +45,14 @@ class Homepage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const AddDataForm();
+            },
+          );
+        },
         child: const Icon(
           CupertinoIcons.add_circled,
         ),
