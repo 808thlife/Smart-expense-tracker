@@ -1,6 +1,8 @@
 import 'dart:ui';
 
-enum ExpenseCategory {
+import 'package:flutter/material.dart';
+
+enum ExpenseCategoryEnum {
   leisure,
   transportation,
   cafe,
@@ -9,17 +11,24 @@ enum ExpenseCategory {
   other
 }
 
-class Expense {
+class ExpenseCategory {
   final Color color;
+  final Icon icon;
+  final ExpenseCategoryEnum category;
+
+  ExpenseCategory(
+      {required this.color, required this.category, required this.icon});
+}
+
+class Expense {
   final DateTime timestamp;
-  final String name;
+  final String? comment;
   final double expense;
   final ExpenseCategory category;
 
-  Expense(
-      {required this.color,
-      required this.name,
-      required this.expense,
-      required this.category})
-      : timestamp = DateTime.now();
+  Expense({
+    this.comment,
+    required this.expense,
+    required this.category,
+  }) : timestamp = DateTime.now();
 }
