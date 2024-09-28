@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 enum ExpenseCategoryEnum {
   leisure,
@@ -22,13 +23,17 @@ class ExpenseCategory {
 
 class Expense {
   final DateTime timestamp;
+  String? id;
   final String? comment;
   final double expense;
   final ExpenseCategory category;
+
+  static const Uuid _uuid = Uuid();
 
   Expense({
     this.comment,
     required this.expense,
     required this.category,
-  }) : timestamp = DateTime.now();
+  })  : timestamp = DateTime.now(),
+        id = _uuid.v4();
 }

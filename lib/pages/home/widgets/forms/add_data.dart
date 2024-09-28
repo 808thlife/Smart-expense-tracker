@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_expenses/data/models/categories_instances.dart';
 import 'package:smart_expenses/data/models/expense.dart';
+import 'package:smart_expenses/data/providers/expense_provider.dart';
 
-class AddDataForm extends StatefulWidget {
+class AddDataForm extends ConsumerStatefulWidget {
   const AddDataForm({super.key});
 
   @override
-  State<AddDataForm> createState() => _AddDataFormState();
+  ConsumerState<AddDataForm> createState() => _AddDataFormState();
 }
 
-class _AddDataFormState extends State<AddDataForm> {
+class _AddDataFormState extends ConsumerState<AddDataForm> {
   final _formKey = GlobalKey<FormState>();
   final amountController = TextEditingController();
   final commentController = TextEditingController();
@@ -45,7 +47,8 @@ class _AddDataFormState extends State<AddDataForm> {
                 validator: (value) {
                   if (value == null ||
                       value.trim().isEmpty ||
-                      value as double <= 0) {
+                      double.tryParse(value) == null ||
+                      double.parse(value) <= 0) {
                     return 'Please, check if the the amount is correct.';
                   }
                   return null;
@@ -63,8 +66,7 @@ class _AddDataFormState extends State<AddDataForm> {
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ),
-                      keyboardType: TextInputType
-                          .text, // Adjust keyboard type if necessary
+                      keyboardType: TextInputType.text,
                     ),
                   ),
                   const SizedBox(
@@ -118,7 +120,20 @@ class _AddDataFormState extends State<AddDataForm> {
                     width: 15,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        ref.read(expenseProvider.notifier).addExpense(
+                              Expense(
+                                category: categoryController!,
+                                comment: commentController.text,
+                                expense: double.parse(amountController
+                                    .text), // Parsing the string input to double
+                              ),
+                            );
+                        Navigator.of(context)
+                            .pop(); // Close the form after adding
+                      }
+                    },
                     style: ButtonStyle(
                       backgroundColor: WidgetStateProperty.all<Color>(
                           Theme.of(context).colorScheme.inversePrimary),
