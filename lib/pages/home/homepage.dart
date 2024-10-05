@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_expenses/pages/home/widgets/date_categories.dart';
 import 'package:smart_expenses/pages/home/widgets/expenses_list.dart';
 import 'package:smart_expenses/pages/home/widgets/forms/add_data.dart';
 import 'package:smart_expenses/pages/home/widgets/tab_bar.dart';
@@ -69,12 +68,9 @@ class Homepage extends StatelessWidget {
           child: Column(
             children: [
               TabBarWidget(),
-              SizedBox(
-                height: 35,
-              ),
-              Center(
-                child: DateCategories(),
-              ),
+
+              //TODO: Make it work (later).
+              // DateCategories(),
               SizedBox(
                 height: 35,
               ),

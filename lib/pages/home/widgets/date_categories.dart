@@ -16,8 +16,7 @@ class _DateCategoriesState extends ConsumerState<DateCategories> {
   DateFilter? _selectedDateFilter;
 
   // Method to filter expenses based on the selected date range
-  List<Expense> _filterExpenses(DateFilter? filter) {
-    final expenses = ref.watch(expenseProvider);
+  List<Expense> _filterExpenses(List<Expense> expenses, DateFilter? filter) {
     if (filter == null) return expenses;
 
     DateTime now = DateTime.now();
@@ -49,43 +48,38 @@ class _DateCategoriesState extends ConsumerState<DateCategories> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    final expenses = ref.watch(expenseProvider);
+    final filteredExpenses = _filterExpenses(expenses, _selectedDateFilter);
+
+    return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           DropdownButton<DateFilter>(
             value: _selectedDateFilter,
-            hint: const Text('Select Date Range'),
+            hint: const Text('Select date filter'),
             items: DateFilter.values.map((DateFilter filter) {
               return DropdownMenuItem<DateFilter>(
                 value: filter,
-                child: Text(filter == DateFilter.today
-                    ? 'Today'
-                    : filter == DateFilter.thisWeek
-                        ? 'This Week'
-                        : 'This Month'),
+                child: Text(filter.toString().split('.').last),
               );
             }).toList(),
-            onChanged: (DateFilter? newValue) {
+            onChanged: (DateFilter? value) {
               setState(() {
-                _selectedDateFilter = newValue;
+                _selectedDateFilter = value;
               });
+              // Update the filtered expenses in the provider
             },
           ),
-          // Display the filtered expenses here
-          Expanded(
-            child: ListView.builder(
-              itemCount: _filterExpenses(_selectedDateFilter).length,
-              itemBuilder: (context, index) {
-                final expense = _filterExpenses(_selectedDateFilter)[index];
-                return ListTile(
-                  title: Text('\$${expense.expense.toStringAsFixed(2)}'),
-                  subtitle: Text(expense.category.category.toString()),
-                  trailing:
-                      Text(DateFormat('yyyy-MM-dd').format(expense.timestamp)),
-                );
-              },
-            ),
-          ),
+          // You can add more widgets here to display the filtered expenses
+          // For example:
+          // Text('Filtered Expenses: ${filteredExpenses.length}'),
+          // ListView.builder(
+          //   itemCount: filteredExpenses.length,
+          //   itemBuilder: (context, index) {
+          //     // Build your expense list item widget
+          //   },
+          // ),
         ],
       ),
     );

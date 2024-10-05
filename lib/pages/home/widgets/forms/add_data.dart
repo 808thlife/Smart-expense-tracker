@@ -126,12 +126,21 @@ class _AddDataFormState extends ConsumerState<AddDataForm> {
                               Expense(
                                 category: categoryController!,
                                 comment: commentController.text,
-                                expense: double.parse(amountController
-                                    .text), // Parsing the string input to double
+                                expense: double.parse(
+                                  amountController.text,
+                                ), // Parsing the string input to double
                               ),
                             );
-                        Navigator.of(context)
-                            .pop(); // Close the form after adding
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            backgroundColor: Color.fromARGB(184, 76, 175, 79),
+                            content: Text(
+                              "You have successfully added the expense!",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        );
+                        Navigator.of(context).pop();
                       }
                     },
                     style: ButtonStyle(

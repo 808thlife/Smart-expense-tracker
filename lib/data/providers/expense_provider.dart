@@ -13,7 +13,8 @@ class ExpenseProvider extends StateNotifier<List<Expense>> {
   }
 }
 
-final expenseProvider =
-    StateNotifierProvider<ExpenseProvider, List<Expense>>((ref) {
-  return ExpenseProvider();
-});
+final expenseProvider = StateNotifierProvider<ExpenseProvider, List<Expense>>(
+  (ref) {
+    return ExpenseProvider();
+  },
+);
