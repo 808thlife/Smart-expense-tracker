@@ -1,16 +1,23 @@
-# smart_expenses
+# Smart Expenses
 
-A new Flutter project.
+Smart Expenses is a powerful expense tracking application designed to help users manage their finances effectively. The app integrates AI to analyze user spending patterns over time and provides visual insights through intuitive graphs.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Track Expenses**: Easily log daily expenses and categorize them (e.g., groceries, entertainment, transportation).
+- **Date Filters**: Filter expenses by different time periods (today, this week, this month) to analyze your spending.
+- **Graphs and Charts**: Visualize your spending patterns through graphs, giving you clear insights into where your money is going.
+- **AI Integration**: Get personalized AI-powered analysis of your expenses over a given period of time, helping you make smarter financial decisions.
+- **Expense Categories**: Organize expenses by categories for a detailed view of your financial activity.
+- **Reminders & Notifications**: Set reminders for upcoming payments or recurring expenses.
+- **Export Data**: Export your expenses as a CSV file for further analysis or sharing.
 
-A few resources to get you started if this is your first Flutter project:
+## AI Integration
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+The app uses AI to analyze your spending habits across various periods (e.g., week, month, or custom date range). The AI helps you answer questions like:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Where do you spend the most?
+- How much have you spent on groceries in the past month?
+- What are your biggest recurring expenses?
+
+Based on this analysis, the app can give recommendations or insights on how to optimize your budget.
