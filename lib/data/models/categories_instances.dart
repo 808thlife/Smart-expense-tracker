@@ -14,22 +14,22 @@ final categories = [
     icon: const Icon(HugeIcons.strokeRoundedBeach),
   ),
   ExpenseCategory(
-    color: Colors.blue,
+    color: const Color.fromARGB(255, 40, 33, 243),
     category: ExpenseCategoryEnum.transportation,
     icon: const Icon(HugeIcons.strokeRoundedCar01),
   ),
   ExpenseCategory(
-    color: Colors.blue,
+    color: const Color.fromARGB(255, 170, 22, 187),
     category: ExpenseCategoryEnum.services,
     icon: const Icon(HugeIcons.strokeRoundedService),
   ),
   ExpenseCategory(
-    color: Colors.blue,
+    color: const Color.fromARGB(255, 7, 120, 60),
     category: ExpenseCategoryEnum.streamings,
     icon: const Icon(HugeIcons.strokeRoundedSpotify),
   ),
   ExpenseCategory(
-    color: Colors.blue,
+    color: const Color.fromARGB(255, 222, 151, 19),
     category: ExpenseCategoryEnum.other,
     icon: const Icon(HugeIcons.strokeRoundedQuestion),
   ),
