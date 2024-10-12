@@ -48,8 +48,8 @@ class _DateCategoriesState extends ConsumerState<DateCategories> {
 
   @override
   Widget build(BuildContext context) {
-    final expenses = ref.watch(expenseProvider);
-    final filteredExpenses = _filterExpenses(expenses, _selectedDateFilter);
+    // final expenses = ref.watch(expenseProvider);
+    // final filteredExpenses = _filterExpenses(expenses, _selectedDateFilter);
 
     return Center(
       child: Column(

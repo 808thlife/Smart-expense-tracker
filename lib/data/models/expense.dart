@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 enum ExpenseCategoryEnum {
@@ -34,4 +35,8 @@ class Expense {
     required this.category,
   })  : timestamp = DateTime.now(),
         id = _uuid.v4();
+
+  String get getDate {
+    return DateFormat('MM/dd/yyyy').format(timestamp);
+  }
 }
