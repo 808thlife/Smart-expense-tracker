@@ -23,6 +23,7 @@ class ExpenseCategory {
 class Expense {
   final DateTime timestamp;
   String? id;
+  final String title;
   final String? comment;
   final double expense;
   final ExpenseCategory category;
@@ -33,6 +34,7 @@ class Expense {
     this.comment,
     required this.expense,
     required this.category,
+    required this.title,
   })  : timestamp = DateTime.now(),
         id = _uuid.v4();
 

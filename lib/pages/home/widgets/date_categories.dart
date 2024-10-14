@@ -33,7 +33,7 @@ class _DateCategoriesState extends ConsumerState<DateCategories> {
         return expenses
             .where((expense) =>
                 expense.timestamp.isAfter(startOfWeek) &&
-                expense.timestamp.isBefore(now.add(Duration(days: 1))))
+                expense.timestamp.isBefore(now.add(const Duration(days: 1))))
             .toList();
       case DateFilter.thisMonth:
         return expenses

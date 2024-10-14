@@ -15,6 +15,7 @@ class _AddDataFormState extends ConsumerState<AddDataForm> {
   final _formKey = GlobalKey<FormState>();
   final amountController = TextEditingController();
   final commentController = TextEditingController();
+  final titleController = TextEditingController();
 
   ExpenseCategory? categoryController = categories[0];
 
@@ -54,6 +55,22 @@ class _AddDataFormState extends ConsumerState<AddDataForm> {
                   return null;
                 },
               ),
+              TextFormField(
+                controller: titleController,
+                decoration: InputDecoration(
+                  label: Text(
+                    "Title",
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
+                keyboardType: TextInputType.text,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Please, check if the title is correct.';
+                  }
+                  return null;
+                },
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -70,11 +87,11 @@ class _AddDataFormState extends ConsumerState<AddDataForm> {
                     ),
                   ),
                   const SizedBox(
-                      width: 20), // Add some spacing between the two widgets
+                    width: 20,
+                  ),
                   Expanded(
                     child: SizedBox(
-                      height:
-                          58, // Match this to the height of the TextFormField
+                      height: 58,
                       child: DropdownButtonFormField<ExpenseCategory>(
                         value: categoryController,
                         items: categories.map((category) {
@@ -124,12 +141,12 @@ class _AddDataFormState extends ConsumerState<AddDataForm> {
                       if (_formKey.currentState!.validate()) {
                         ref.read(expenseProvider.notifier).addExpense(
                               Expense(
-                                category: categoryController!,
-                                comment: commentController.text,
-                                expense: double.parse(
-                                  amountController.text,
-                                ), // Parsing the string input to double
-                              ),
+                                  category: categoryController!,
+                                  comment: commentController.text,
+                                  expense: double.parse(
+                                    amountController.text,
+                                  ), // Parsing the string input to double
+                                  title: titleController.text),
                             );
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(

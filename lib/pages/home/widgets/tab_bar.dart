@@ -16,10 +16,10 @@ class _TabBarWidgetState extends State<TabBarWidget> {
           icon: Icon(Icons.attach_money),
           child: Text("Expenses"),
         ),
-        Tab(
-          icon: Icon(Icons.auto_graph),
-          child: Text("Income"),
-        ),
+        // Tab(
+        //   icon: Icon(Icons.auto_graph),
+        //   child: Text("Income"),
+        // ),
       ],
     );
   }

@@ -45,7 +45,7 @@ class ExpenseCard extends ConsumerWidget {
           },
           child: GestureDetector(
             onTap: () {
-              Widget _buildDetailRow(String label, String value) {
+              Widget buildDetailRow(String label, String value) {
                 return Row(
                   children: [
                     Text(
@@ -70,7 +70,8 @@ class ExpenseCard extends ConsumerWidget {
                           20), // Rounded corners for the dialog
                     ),
                     title: const Text(
-                        "Expense Details"), // Add a title to the dialog
+                      "Expense Details",
+                    ), // Add a title to the dialog
                     content: SizedBox(
                       width: double.infinity,
                       child: Column(
@@ -79,13 +80,27 @@ class ExpenseCard extends ConsumerWidget {
                         crossAxisAlignment:
                             CrossAxisAlignment.start, // Align text to the start
                         children: [
-                          _buildDetailRow(
+                          buildDetailRow(
+                            "Title",
+                            expense.title,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          buildDetailRow(
+                            "Amount",
+                            expense.expense.toString(),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          buildDetailRow(
                               "Category", expense.category.category.name),
                           const SizedBox(height: 10),
-                          _buildDetailRow("Timestamp", expense.getDate),
+                          buildDetailRow("Timestamp", expense.getDate),
                           const SizedBox(height: 10),
                           expense.comment != ""
-                              ? _buildDetailRow("Comment", comment)
+                              ? buildDetailRow("Comment", comment)
                               : const SizedBox(),
                         ],
                       ),
@@ -107,38 +122,6 @@ class ExpenseCard extends ConsumerWidget {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              expense.category.category.name.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 10), // Add some spacing
-                            Text(
-                              "${expense.expense.toString()} \$",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                     Container(
                       decoration: BoxDecoration(
                         color: expense.category.color,
@@ -147,6 +130,51 @@ class ExpenseCard extends ConsumerWidget {
                       ),
                       height: 250,
                       width: 100,
+                      child: expense.category.icon,
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                expense.title.toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Flexible(
+                              child: Text(
+                                "${expense.expense.toString()} \$",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.fade,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10),
+                      child: Text(expense.getDate),
                     ),
                   ],
                 ),
