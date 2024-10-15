@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smart_expenses/data/models/categories_instances.dart';
 import 'package:smart_expenses/data/models/expense.dart';
 import 'package:smart_expenses/data/providers/expense_provider.dart';
 
@@ -94,8 +95,7 @@ class ExpenseCard extends ConsumerWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                          buildDetailRow(
-                              "Category", expense.category.category.name),
+                          buildDetailRow("Category", expense.category.name),
                           const SizedBox(height: 10),
                           buildDetailRow("Timestamp", expense.getDate),
                           const SizedBox(height: 10),
@@ -124,13 +124,13 @@ class ExpenseCard extends ConsumerWidget {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: expense.category.color,
+                        color: getCategoryDetails(expense.category).color,
                         border: Border.all(),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       height: 250,
                       width: 100,
-                      child: expense.category.icon,
+                      child: getCategoryDetails(expense.category).icon,
                     ),
                     Expanded(
                       child: Padding(

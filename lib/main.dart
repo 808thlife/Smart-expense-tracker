@@ -4,11 +4,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:smart_expenses/config/theme/theme.dart';
 import 'package:smart_expenses/config/theme/util.dart';
+import 'package:smart_expenses/data/models/expense.dart';
 import 'package:smart_expenses/pages/home/homepage.dart';
 
 Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await dotenv.load(fileName: ".env");
   await Hive.initFlutter();
+
+  Hive.registerAdapter(ExpenseAdapter());
+  Hive.registerAdapter(ExpenseCategoryEnumAdapter());
+
+  await Hive.openBox<Expense>('expense');
+
   runApp(const ProviderScope(child: MyApp()));
 }
 

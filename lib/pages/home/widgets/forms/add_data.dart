@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smart_expenses/data/hive/expense_crud.dart';
 import 'package:smart_expenses/data/models/categories_instances.dart';
 import 'package:smart_expenses/data/models/expense.dart';
 import 'package:smart_expenses/data/providers/expense_provider.dart';
@@ -139,15 +142,19 @@ class _AddDataFormState extends ConsumerState<AddDataForm> {
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        final expenseToAdd = Expense(
+                            category: categoryController!.category,
+                            comment: commentController.text,
+                            expense: double.parse(
+                              amountController.text,
+                            ),
+                            title: titleController.text);
+                        final hiveManager = ExpenseManager();
+                        hiveManager.addExpense(expenseToAdd);
                         ref.read(expenseProvider.notifier).addExpense(
-                              Expense(
-                                  category: categoryController!,
-                                  comment: commentController.text,
-                                  expense: double.parse(
-                                    amountController.text,
-                                  ), // Parsing the string input to double
-                                  title: titleController.text),
+                              expenseToAdd,
                             );
+                        log(hiveManager.getExpenses().toString());
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             backgroundColor: Color.fromARGB(184, 76, 175, 79),

@@ -22,7 +22,7 @@ class _AiScreenState extends ConsumerState<AiScreen> {
               "title": expense.title.toString(),
               "amount": expense.expense.toString(),
               "comment": expense.comment.toString(),
-              "category": expense.category.category.name,
+              "category": expense.category.name,
             })
         .toList();
 

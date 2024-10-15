@@ -34,3 +34,8 @@ final categories = [
     icon: const Icon(HugeIcons.strokeRoundedQuestion),
   ),
 ];
+
+// A function to return the correct category details based on the enum
+ExpenseCategory getCategoryDetails(ExpenseCategoryEnum categoryEnum) {
+  return categories.firstWhere((category) => category.category == categoryEnum);
+}

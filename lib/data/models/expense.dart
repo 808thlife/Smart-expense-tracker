@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
-part 'expense_model.g.dart';
+part 'expense.g.dart';
 
 @HiveType(typeId: 0)
 enum ExpenseCategoryEnum {
@@ -26,15 +26,11 @@ enum ExpenseCategoryEnum {
   other
 }
 
-@HiveType(typeId: 1)
 class ExpenseCategory {
-  @HiveField(0)
   final Color color;
 
-  @HiveField(1)
   final Icon icon;
 
-  @HiveField(2)
   final ExpenseCategoryEnum category;
 
   ExpenseCategory(
@@ -42,13 +38,24 @@ class ExpenseCategory {
 }
 
 @HiveType(typeId: 2)
-class Expense {
-  final DateTime timestamp;
-  String? id;
-  final String title;
-  final String? comment;
-  final double expense;
-  final ExpenseCategory category;
+class Expense extends HiveObject {
+  @HiveField(0)
+  late String id;
+
+  @HiveField(1)
+  late DateTime timestamp;
+
+  @HiveField(2)
+  late String title;
+
+  @HiveField(3)
+  late String? comment;
+
+  @HiveField(4)
+  late double expense;
+
+  @HiveField(5)
+  late ExpenseCategoryEnum category;
 
   static const Uuid _uuid = Uuid();
 
@@ -57,8 +64,10 @@ class Expense {
     required this.expense,
     required this.category,
     required this.title,
-  })  : timestamp = DateTime.now(),
-        id = _uuid.v4();
+  }) {
+    timestamp = DateTime.now();
+    id = _uuid.v4();
+  }
 
   String get getDate {
     return DateFormat('MM/dd/yyyy').format(timestamp);

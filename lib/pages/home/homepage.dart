@@ -74,7 +74,7 @@ class Homepage extends StatelessWidget {
           length: 2,
           child: Column(
             children: [
-              TabBarWidget(),
+              // TabBarWidget(),
 
               //TODO: Make it work (later).
               // DateCategories(),
