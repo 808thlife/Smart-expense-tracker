@@ -75,6 +75,9 @@ class Homepage extends StatelessWidget {
           child: Column(
             children: [
               TabBarWidget(),
+
+              //TODO: Make it work (later).
+              // DateCategories(),
               SizedBox(
                 height: 35,
               ),

@@ -19,6 +19,7 @@ class _AiScreenState extends ConsumerState<AiScreen> {
         .read(expenseProvider)
         .map((expense) => {
               "timestmap": expense.timestamp.toString(),
+              "title": expense.title.toString(),
               "amount": expense.expense.toString(),
               "comment": expense.comment.toString(),
               "category": expense.category.category.name,
