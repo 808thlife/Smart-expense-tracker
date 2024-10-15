@@ -24,7 +24,6 @@ class ExpenseCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final expenseNotifier = ref.read(expenseProvider.notifier);
-    //Hive
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
