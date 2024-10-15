@@ -1,11 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 import 'package:smart_expenses/data/models/expense.dart';
 
 class ExpenseProvider extends StateNotifier<List<Expense>> {
-  ExpenseProvider() : super([]);
+  ExpenseProvider() : super([]) {
+    _loadExpenses();
+  }
 
   void addExpense(Expense expense) {
     state = [...state, expense];
+  }
+
+  //Loads initial data from Hive.
+  Future<void> _loadExpenses() async {
+    final box = await Hive.openBox<Expense>('expenses');
+    state = box.values.toList(); // Load expenses into the state
   }
 
   void removeExpense(String expenseID) {

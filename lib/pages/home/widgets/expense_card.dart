@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smart_expenses/data/hive/expense_crud.dart';
 import 'package:smart_expenses/data/models/categories_instances.dart';
 import 'package:smart_expenses/data/models/expense.dart';
 import 'package:smart_expenses/data/providers/expense_provider.dart';
@@ -10,12 +13,19 @@ class ExpenseCard extends ConsumerWidget {
   final Expense expense;
 
   void removeExpense(String expenseID, WidgetRef ref) {
+    final expenseManager = ExpenseManager();
+
+    expenseManager.removeExpense(expense);
+    log("Removed from hive.");
+    log(expenseManager.getExpenses().toString());
     ref.read(expenseProvider.notifier).removeExpense(expenseID);
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final expenseNotifier = ref.read(expenseProvider.notifier);
+    //Hive
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       child: ClipRRect(
@@ -26,7 +36,7 @@ class ExpenseCard extends ConsumerWidget {
             color: Theme.of(context).colorScheme.error,
           ),
           onDismissed: (direction) {
-            removeExpense(expense.id!, ref);
+            removeExpense(expense.id, ref);
             ScaffoldMessenger.of(context).clearSnackBars();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
