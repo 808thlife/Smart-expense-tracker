@@ -7,7 +7,7 @@ import 'package:smart_expenses/config/theme/util.dart';
 import 'package:smart_expenses/data/models/expense.dart';
 import 'package:smart_expenses/pages/home/homepage.dart';
 
-Future main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: ".env");

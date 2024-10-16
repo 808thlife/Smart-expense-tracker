@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:smart_expenses/pages/ai_analysis/ai_screen.dart';
 import 'package:smart_expenses/pages/home/widgets/expenses_list.dart';
 import 'package:smart_expenses/pages/home/widgets/forms/add_data.dart';
-import 'package:smart_expenses/pages/home/widgets/tab_bar.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});

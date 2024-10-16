@@ -7,9 +7,16 @@ class ExpenseManager {
     await box.add(expense);
   }
 
-  void removeExpense(Expense expense) async {
+  void removeExpense(String expenseID) async {
     var box = await Hive.openBox<Expense>('expense');
-    await box.delete(expense);
+    final Map<dynamic, Expense> expensesMap = box.toMap();
+    dynamic desiredKey;
+    expensesMap.forEach((key, value) {
+      if (value.id == expenseID) {
+        desiredKey = key;
+      }
+    });
+    await box.delete(desiredKey);
   }
 
   List<Expense> getExpenses() {

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_expenses/data/hive/expense_crud.dart';
@@ -17,7 +15,6 @@ class _ExpensesListState extends ConsumerState<ExpensesList> {
   @override
   Widget build(BuildContext context) {
     final expenseManagerInstance = ExpenseManager();
-    log(expenseManagerInstance.getExpenses().toString());
     ref.watch(expenseProvider);
     final expensesListHive = expenseManagerInstance.getExpenses();
     return ListView.builder(

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_expenses/constants/date_filters.dart';
 import 'package:smart_expenses/data/models/expense.dart';
-import 'package:smart_expenses/data/providers/expense_provider.dart';
 
 class DateCategories extends ConsumerStatefulWidget {
   const DateCategories({super.key});

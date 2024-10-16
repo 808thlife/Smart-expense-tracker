@@ -15,7 +15,7 @@ class ExpenseCard extends ConsumerWidget {
   void removeExpense(String expenseID, WidgetRef ref) {
     final expenseManager = ExpenseManager();
 
-    expenseManager.removeExpense(expense);
+    expenseManager.removeExpense(expenseID);
     log("Removed from hive.");
     log(expenseManager.getExpenses().toString());
     ref.read(expenseProvider.notifier).removeExpense(expenseID);
@@ -24,13 +24,14 @@ class ExpenseCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final expenseNotifier = ref.read(expenseProvider.notifier);
+    ref.watch(expenseProvider);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Dismissible(
-          key: Key(expense.id!),
+          key: UniqueKey(),
           background: Container(
             color: Theme.of(context).colorScheme.error,
           ),
@@ -46,7 +47,9 @@ class ExpenseCard extends ConsumerWidget {
                   label: "Undo",
                   textColor: Colors.black,
                   onPressed: () {
-                    // Restore the expense using the notifier, which still exists
+                    final expenseManager = ExpenseManager();
+
+                    expenseManager.addExpense(expense);
                     expenseNotifier.addExpense(expense);
                   },
                 ),
