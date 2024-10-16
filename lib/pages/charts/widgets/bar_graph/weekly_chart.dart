@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_expenses/data/hive/expense_crud.dart';
 import 'package:smart_expenses/data/models/expense.dart';
-import 'package:smart_expenses/data/providers/expense_provider.dart';
 
 class WeeklyChart extends ConsumerStatefulWidget {
   const WeeklyChart({super.key});
@@ -78,6 +77,68 @@ class _WeeklyChartState extends ConsumerState<WeeklyChart> {
   Widget build(BuildContext context) {
     final weeklies = getWeekdayExpenseSums();
     log(weeklies.toString());
-    return SizedBox();
+    return AspectRatio(
+      aspectRatio: 1.6,
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: BarChart(
+          BarChartData(
+            alignment: BarChartAlignment.spaceAround,
+            maxY: weeklies.values.reduce((a, b) => a > b ? a : b),
+            titlesData: FlTitlesData(
+              show: true,
+              bottomTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  getTitlesWidget: (double value, TitleMeta meta) {
+                    List<String> days = weeklies.keys.toList();
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(days[value.toInt()],
+                          style: const TextStyle(fontSize: 12)),
+                    );
+                  },
+                  reservedSize: 30,
+                ),
+              ),
+              leftTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  reservedSize: 40,
+                  interval: 100,
+                  maxIncluded: false,
+                  minIncluded: true,
+                  getTitlesWidget: (double value, TitleMeta meta) {
+                    return Text(
+                      '\$${value.toInt()}',
+                      style: const TextStyle(fontSize: 10),
+                    );
+                  },
+                ),
+              ),
+              topTitles:
+                  const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              rightTitles:
+                  const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            ),
+            borderData: FlBorderData(show: false),
+            gridData: const FlGridData(show: false),
+            barGroups: weeklies.entries.map((entry) {
+              int x = weeklies.keys.toList().indexOf(entry.key);
+              return BarChartGroupData(
+                x: x,
+                barRods: [
+                  BarChartRodData(
+                    toY: entry.value,
+                    color: Colors.blue,
+                    width: 20, // Adjust bar width as needed
+                  )
+                ],
+              );
+            }).toList(),
+          ),
+        ),
+      ),
+    );
   }
 }

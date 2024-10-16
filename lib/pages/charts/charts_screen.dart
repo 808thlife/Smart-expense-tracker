@@ -11,7 +11,19 @@ class ChartsScreen extends StatelessWidget {
         title: const Text("Charts"),
       ),
       body: Column(
-        children: [WeeklyChart()],
+        children: [
+          Text(
+            "Weekly Bar Chart",
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          const SizedBox(
+            height: 250,
+            width: double.infinity,
+            child: Card(
+              child: WeeklyChart(),
+            ),
+          )
+        ],
       ),
     );
   }
