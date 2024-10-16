@@ -59,13 +59,12 @@ class Expense extends HiveObject {
 
   static const Uuid _uuid = Uuid();
 
-  Expense({
-    this.comment,
-    required this.expense,
-    required this.category,
-    required this.title,
-  }) {
-    timestamp = DateTime.now();
+  Expense(
+      {this.comment,
+      required this.expense,
+      required this.category,
+      required this.title,
+      required this.timestamp}) {
     id = _uuid.v4();
   }
 

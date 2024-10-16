@@ -21,9 +21,8 @@ class ExpenseAdapter extends TypeAdapter<Expense> {
       expense: fields[4] as double,
       category: fields[5] as ExpenseCategoryEnum,
       title: fields[2] as String,
-    )
-      ..id = fields[0] as String
-      ..timestamp = fields[1] as DateTime;
+      timestamp: fields[1] as DateTime,
+    )..id = fields[0] as String;
   }
 
   @override

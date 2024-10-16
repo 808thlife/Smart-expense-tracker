@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:smart_expenses/data/hive/expense_crud.dart';
 import 'package:smart_expenses/data/models/categories_instances.dart';
 import 'package:smart_expenses/data/models/expense.dart';
@@ -20,12 +21,29 @@ class _AddDataFormState extends ConsumerState<AddDataForm> {
   final commentController = TextEditingController();
   final titleController = TextEditingController();
 
+  DateTime? _selectedDate = DateTime.now();
+
+  void _presentDatePicker() async {
+    final now = DateTime.now();
+    final firstDate = DateTime(now.year, now.month - 1, now.day);
+    final lastDate = DateTime(now.year, now.month + 1, now.day);
+    final pickedDate = await showDatePicker(
+        context: context,
+        firstDate: firstDate,
+        lastDate: lastDate,
+        initialDate: _selectedDate);
+    setState(() {
+      _selectedDate = pickedDate;
+    });
+  }
+
   ExpenseCategory? categoryController = categories[0];
 
   @override
   void dispose() {
     amountController.dispose();
     commentController.dispose();
+    titleController.dispose();
     super.dispose();
   }
 
@@ -73,6 +91,26 @@ class _AddDataFormState extends ConsumerState<AddDataForm> {
                   }
                   return null;
                 },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: _presentDatePicker,
+                    icon: const Icon(Icons.calendar_today),
+                  ),
+                  const SizedBox(width: 15),
+                  Text(
+                    _selectedDate == null
+                        ? 'No date selected'
+                        : DateFormat.yMMMMEEEEd()
+                            .format(_selectedDate!)
+                            .toString(),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -143,12 +181,14 @@ class _AddDataFormState extends ConsumerState<AddDataForm> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         final expenseToAdd = Expense(
-                            category: categoryController!.category,
-                            comment: commentController.text,
-                            expense: double.parse(
-                              amountController.text,
-                            ),
-                            title: titleController.text);
+                          category: categoryController!.category,
+                          comment: commentController.text,
+                          expense: double.parse(
+                            amountController.text,
+                          ),
+                          title: titleController.text,
+                          timestamp: _selectedDate!,
+                        );
                         final hiveManager = ExpenseManager();
                         hiveManager.addExpense(expenseToAdd);
                         ref.read(expenseProvider.notifier).addExpense(
