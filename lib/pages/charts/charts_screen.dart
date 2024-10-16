@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_expenses/pages/charts/widgets/bar_graph/weekly_chart.dart';
 
 class ChartsScreen extends StatelessWidget {
   const ChartsScreen({super.key});
@@ -10,7 +11,7 @@ class ChartsScreen extends StatelessWidget {
         title: const Text("Charts"),
       ),
       body: Column(
-        children: [],
+        children: [WeeklyChart()],
       ),
     );
   }

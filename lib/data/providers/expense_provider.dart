@@ -4,7 +4,7 @@ import 'package:smart_expenses/data/models/expense.dart';
 
 class ExpenseProvider extends StateNotifier<List<Expense>> {
   ExpenseProvider() : super([]) {
-    _loadExpenses();
+    loadExpenses();
   }
 
   void addExpense(Expense expense) {
@@ -12,7 +12,7 @@ class ExpenseProvider extends StateNotifier<List<Expense>> {
   }
 
   //Loads initial data from Hive.
-  Future<void> _loadExpenses() async {
+  Future<void> loadExpenses() async {
     final box = await Hive.openBox<Expense>('expenses');
     state = box.values.toList(); // Load expenses into the state
   }

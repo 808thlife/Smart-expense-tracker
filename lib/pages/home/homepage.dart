@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_expenses/pages/ai_analysis/ai_screen.dart';
+import 'package:smart_expenses/pages/charts/charts_screen.dart';
 import 'package:smart_expenses/pages/home/widgets/expenses_list.dart';
 import 'package:smart_expenses/pages/home/widgets/forms/add_data.dart';
 
@@ -33,9 +34,15 @@ class Homepage extends StatelessWidget {
               child: SizedBox(),
             ),
             ListTile(
-              title: const Text('Graphs'),
+              title: const Text('Charts'),
               leading: const Icon(CupertinoIcons.graph_square),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ChartsScreen(),
+                  ),
+                );
+              },
             ),
             ListTile(
               title: const Text('AI analysis'),
