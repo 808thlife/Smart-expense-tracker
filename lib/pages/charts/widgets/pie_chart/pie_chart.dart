@@ -76,43 +76,82 @@ class _PieChartWidgetState extends State<PieChartWidget> {
   Widget build(BuildContext context) {
     int? touchedIndex;
     final data = getWeekdayExpenseSums();
-    final sections = data.entries
-        .where((entry) => entry.value > 0)
+    final nonZeroEntries =
+        data.entries.where((entry) => entry.value > 0).toList();
+
+    final sections = nonZeroEntries
         .map((entry) => PieChartSectionData(
               color: _getColor(entry.key),
               value: entry.value,
-              title: '${entry.key}\n\$${entry.value}',
+              title: '', // Remove text from sections
               radius: touchedIndex == _getDayIndex(entry.key) ? 120 : 100,
-              titleStyle: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
             ))
         .toList();
 
-    return SizedBox(
-      height: 400,
-      child: PieChart(
-        PieChartData(
-          pieTouchData: PieTouchData(
-            touchCallback: (FlTouchEvent event, pieTouchResponse) {
-              setState(() {
-                if (!event.isInterestedForInteractions ||
-                    pieTouchResponse == null ||
-                    pieTouchResponse.touchedSection == null) {
-                  touchedIndex = -1;
-                  return;
-                }
-                touchedIndex =
-                    pieTouchResponse.touchedSection!.touchedSectionIndex;
-              });
-            },
+    return Container(
+      height: 400, // Fixed total height
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          Expanded(
+            child: PieChart(
+              PieChartData(
+                pieTouchData: PieTouchData(
+                  touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                    setState(() {
+                      if (!event.isInterestedForInteractions ||
+                          pieTouchResponse == null ||
+                          pieTouchResponse.touchedSection == null) {
+                        touchedIndex = null;
+                        return;
+                      }
+                      touchedIndex =
+                          pieTouchResponse.touchedSection!.touchedSectionIndex;
+                    });
+                  },
+                ),
+                sectionsSpace: 2,
+                centerSpaceRadius: 40,
+                sections: sections,
+              ),
+            ),
           ),
-          sectionsSpace: 2,
-          centerSpaceRadius: 0,
-          sections: sections,
-        ),
+          const SizedBox(height: 16),
+          // Legend wrapped in a container with fixed height
+          Container(
+            height: 80, // Fixed height for legend
+            child: SingleChildScrollView(
+              child: Wrap(
+                spacing: 16,
+                runSpacing: 8,
+                alignment: WrapAlignment.center,
+                children: nonZeroEntries.map((entry) {
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 16,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: _getColor(entry.key),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${entry.key}: \$${entry.value.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -120,19 +159,19 @@ class _PieChartWidgetState extends State<PieChartWidget> {
   Color _getColor(String day) {
     switch (day) {
       case 'Mon':
-        return Colors.red;
+        return Theme.of(context).colorScheme.error;
       case 'Tue':
         return Colors.blue;
       case 'Wed':
-        return Colors.green;
+        return Theme.of(context).colorScheme.primary;
       case 'Thu':
-        return Colors.purple;
+        return const Color.fromARGB(255, 156, 59, 173);
       case 'Fri':
-        return Colors.orange;
+        return const Color.fromARGB(255, 232, 160, 52);
       case 'Sat':
-        return Colors.pink;
+        return const Color.fromARGB(255, 212, 63, 113);
       case 'Sun':
-        return Colors.teal;
+        return const Color.fromARGB(255, 18, 142, 130);
       default:
         return Colors.grey;
     }

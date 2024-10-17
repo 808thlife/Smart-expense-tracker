@@ -94,8 +94,10 @@ class _WeeklyChartState extends ConsumerState<WeeklyChart> {
                     List<String> days = weeklies.keys.toList();
                     return Padding(
                       padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(days[value.toInt()],
-                          style: const TextStyle(fontSize: 12)),
+                      child: Text(
+                        days[value.toInt()],
+                        style: const TextStyle(fontSize: 12),
+                      ),
                     );
                   },
                   reservedSize: 30,

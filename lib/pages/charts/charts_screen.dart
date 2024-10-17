@@ -11,34 +11,36 @@ class ChartsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Charts"),
       ),
-      body: Column(
-        children: [
-          Text(
-            "Weekly Bar Chart",
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          const SizedBox(
-            height: 250,
-            width: double.infinity,
-            child: Card(
-              child: WeeklyChart(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(
+              "Weekly Bar Chart",
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            "Weekly Pie Chart",
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          const SizedBox(
-            height: 250,
-            width: double.infinity,
-            child: Card(
-              child: PieChartWidget(),
+            const SizedBox(
+              height: 250,
+              width: double.infinity,
+              child: Card(
+                child: WeeklyChart(),
+              ),
             ),
-          )
-        ],
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              "Weekly Pie Chart",
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            const SizedBox(
+              height: 500,
+              width: double.infinity,
+              child: Card(
+                child: PieChartWidget(),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

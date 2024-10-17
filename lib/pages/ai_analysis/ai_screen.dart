@@ -46,7 +46,13 @@ class _AiScreenState extends ConsumerState<AiScreen> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
-              return const Text('Error fetching analysis');
+              return Text(
+                'Error fetching analysis. Please check your internet connection.',
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                textAlign: TextAlign.center,
+              );
             } else if (snapshot.hasData) {
               return Markdown(data: snapshot.data!);
             } else {
