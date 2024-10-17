@@ -153,7 +153,7 @@ class _WeeklyChartState extends ConsumerState<WeeklyChart> {
                 sideTitles: SideTitles(
                   showTitles: true,
                   reservedSize: 40,
-                  interval: 100,
+                  interval: 200,
                   maxIncluded: false,
                   minIncluded: true,
                   getTitlesWidget: (double value, TitleMeta meta) {
