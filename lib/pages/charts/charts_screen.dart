@@ -14,31 +14,50 @@ class ChartsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Text(
-              "Weekly Bar Chart",
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
             const SizedBox(
-              height: 250,
+              height: 40,
+            ),
+            SizedBox(
+              height: 350,
               width: double.infinity,
               child: Card(
-                child: WeeklyChart(),
+                child: Column(
+                  children: [
+                    Text(
+                      "Weekly Bar Chart",
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    const WeeklyChart(),
+                  ],
+                ),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            Text(
-              "Weekly Pie Chart",
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(
-              height: 500,
-              width: double.infinity,
-              child: Card(
-                child: PieChartWidget(),
-              ),
-            )
+            SizedBox(
+                height: 500,
+                width: double.infinity,
+                child: Card(
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Weekly Pie Chart",
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const PieChartWidget()
+                    ],
+                  ),
+                )),
           ],
         ),
       ),

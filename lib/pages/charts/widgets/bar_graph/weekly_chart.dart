@@ -75,6 +75,7 @@ class _WeeklyChartState extends ConsumerState<WeeklyChart> {
 
   @override
   Widget build(BuildContext context) {
+    int? touchedIndex;
     final weeklies = getWeekdayExpenseSums();
     log(weeklies.toString());
     return AspectRatio(
@@ -85,6 +86,48 @@ class _WeeklyChartState extends ConsumerState<WeeklyChart> {
           BarChartData(
             alignment: BarChartAlignment.spaceAround,
             maxY: weeklies.values.reduce((a, b) => a > b ? a : b),
+            barTouchData: BarTouchData(
+              enabled: true,
+              touchTooltipData: BarTouchTooltipData(
+                getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                  String weekDay = weeklies.keys.toList()[group.x.toInt()];
+                  return BarTooltipItem(
+                    '$weekDay\n',
+                    const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: '\$${rod.toY.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          color: Colors.yellow,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+              touchCallback:
+                  (FlTouchEvent event, BarTouchResponse? touchResponse) {
+                setState(() {
+                  if (event is FlTapUpEvent) {
+                    touchedIndex = touchResponse?.spot?.touchedBarGroupIndex;
+                    if (touchedIndex != null) {
+                      String selectedDay =
+                          weeklies.keys.elementAt(touchedIndex!);
+                      double amount = weeklies.values.elementAt(touchedIndex!);
+                      log('Bar clicked: $selectedDay - \$${amount.toStringAsFixed(2)}');
+                      // Add your click handling logic here
+                    }
+                  } else {
+                    touchedIndex = -1;
+                  }
+                });
+              },
+            ),
             titlesData: FlTitlesData(
               show: true,
               bottomTitles: AxisTitles(
@@ -92,13 +135,16 @@ class _WeeklyChartState extends ConsumerState<WeeklyChart> {
                   showTitles: true,
                   getTitlesWidget: (double value, TitleMeta meta) {
                     List<String> days = weeklies.keys.toList();
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        days[value.toInt()],
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                    );
+                    if (value >= 0 && value < days.length) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          days[value.toInt()],
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                      );
+                    }
+                    return const Text('');
                   },
                   reservedSize: 30,
                 ),
@@ -132,7 +178,9 @@ class _WeeklyChartState extends ConsumerState<WeeklyChart> {
                 barRods: [
                   BarChartRodData(
                     toY: entry.value,
-                    color: Theme.of(context).colorScheme.primary,
+                    color: touchedIndex == x
+                        ? Theme.of(context).colorScheme.primary.withOpacity(0.5)
+                        : Theme.of(context).colorScheme.primary,
                     width: 20,
                   )
                 ],
