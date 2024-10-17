@@ -130,8 +130,8 @@ class _WeeklyChartState extends ConsumerState<WeeklyChart> {
                 barRods: [
                   BarChartRodData(
                     toY: entry.value,
-                    color: Colors.blue,
-                    width: 20, // Adjust bar width as needed
+                    color: Theme.of(context).colorScheme.primary,
+                    width: 20,
                   )
                 ],
               );
