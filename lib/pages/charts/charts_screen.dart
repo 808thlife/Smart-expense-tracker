@@ -1,4 +1,3 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_expenses/pages/charts/widgets/bar_graph/weekly_chart.dart';
 import 'package:smart_expenses/pages/charts/widgets/pie_chart/pie_chart.dart';
