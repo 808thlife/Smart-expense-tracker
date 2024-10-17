@@ -21,3 +21,7 @@ The app uses AI to analyze your spending habits across various periods (e.g., we
 - What are your biggest recurring expenses?
 
 Based on this analysis, the app can give recommendations or insights on how to optimize your budget.
+
+## Extra Note
+To make AI analysis work you have to add your own `GEMINI_KEY` inside .env file in the directory (the parent one, not the lib).
+It can be obtained visiting this link: https://aistudio.google.com/app/apikey
