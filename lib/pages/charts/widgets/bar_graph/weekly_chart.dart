@@ -153,6 +153,7 @@ class _WeeklyChartState extends ConsumerState<WeeklyChart> {
                 sideTitles: SideTitles(
                   showTitles: true,
                   reservedSize: 40,
+                  //TODO: make the interval dynamic based on the difference between the values.
                   interval: 200,
                   maxIncluded: false,
                   minIncluded: true,
